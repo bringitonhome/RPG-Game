@@ -6,67 +6,11 @@
 
 #include <ctime>
 
-//Window Constants
-#define WW 800
-#define WH 600
-#define SCALE 5
+#include "constants.h"
 
-//Animation Constants
-#define DELAY 5
-
-//Stats Constants
-#define NUMATTRIBUTES 5
-#define ATTACK 0
-#define DEFENSE 1
-#define EVADE 2
-#define LUCK 3
-#define SPEED 4
-
-//Game constants
-#define NUMCHARACTERS 3
-#define NUMENEMIES 3
+#include "character.h"
 
 using namespace std;
-
-class Character{
-public:
-    Character();
-
-    int getAttribute(int attribute){
-        return attributes[attribute];
-    }
-    sf::Sprite getSprite(){
-        return sprite;
-    }
-
-    void setSprite(sf::Texture* texture, int row){
-        sprite.setTexture(*texture);
-        sprite.setTextureRect(sf::IntRect(0, 20*row, 10, 20));
-        sprite.setScale(SCALE, SCALE);
-    }
-    void setPosition(int x, int y){
-        sprite.setPosition(x, y);
-    }
-    void moveSprite(int spriteAlternate){
-        sprite.move(10*spriteAlternate, 0);
-    }
-    void animateSprite(int numLoop, int spriteSheetRow, int numImages){
-        sprite.setTextureRect(sf::IntRect((numLoop % numImages)*10, 20*spriteSheetRow, 10, 20));
-    }
-
-private:
-    int attributes[NUMATTRIBUTES];
-    sf::Sprite sprite;
-};
-
-Character::Character()
-{
-    attributes[ATTACK] = (rand() % 100) + 1;
-    attributes[DEFENSE] = (rand() % 100) + 1;
-    attributes[EVADE] = (rand() % 100) + 1;
-    attributes[LUCK] = (rand() % 100) + 1;
-    attributes[SPEED] = (rand() % 100) + 1;
-}
 
 int charSelect(sf::Event event, int selectedChar){
     bool upPressed = false;
