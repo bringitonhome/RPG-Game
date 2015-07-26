@@ -2,6 +2,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
+#include <SFML/Audio.hpp>
+
 #include <ctime>
 
 #include "constants.h"
@@ -12,6 +14,12 @@ using namespace std;
 
 int main()
 {
+    //Start Song
+    sf::Music music;
+    if(!music.openFromFile("song.wav"))
+        return -1;
+    music.play();
+
     //Initialize Variables
     int numLoop = 0;
     int spriteAnimateSlow = 1;
