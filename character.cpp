@@ -31,18 +31,25 @@ sf::Sprite Character::getSprite()
 	return sprite;
 }
 
-void Character::setSprite(sf::Texture* texture, int row){
+void Character::setSprite(sf::Texture* texture, int row)
+{
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sf::IntRect(0, 20*row, 10, 20));
 	sprite.setScale(SCALE, SCALE);
 }
-void Character:: setPosition(int x, int y){
+
+void Character:: setPosition(int x, int y)
+{
 	sprite.setPosition(x, y);
 }
-void Character:: moveSprite(int spriteAlternate){
+
+void Character:: moveSprite(int spriteAlternate)
+{
 	sprite.move(10*spriteAlternate, 0);
 }
-void Character:: animateSprite(int numLoop, int spriteSheetRow, int numImages){
+
+void Character:: animateSprite(int numLoop, int spriteSheetRow, int numImages)
+{
 	sprite.setTextureRect(sf::IntRect((numLoop % numImages)*10, 20*spriteSheetRow, 10, 20));
 }
 
