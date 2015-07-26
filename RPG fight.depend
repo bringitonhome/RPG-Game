@@ -21,3 +21,9 @@
 	<string>
 	<typeinfo>
 
+1437887089 source:d:\keep\c++ programs\rpg-game\main.cpp
+	<iostream>
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+
