@@ -12,17 +12,37 @@
 
 using namespace std;
 
+int charSelect(sf::Event event, int selectedChar){
+    bool upPressed = false;
+    bool downPressed = false;
+
+    if(event.type == sf::Event::KeyReleased){
+        if(event.key.code == sf::Keyboard::Up){
+            upPressed = true;
+        }
+        if(event.key.code == sf::Keyboard::Down){
+            downPressed = true;
+        }
+    }
+    selectedChar += (int)downPressed - (int)upPressed;
+
+    return selectedChar;
+}
+
 int main()
 {
+    /*
     //Start Song
     sf::Music music;
     if(!music.openFromFile("song.wav"))
         return -1;
     music.play();
+    */
 
     //Initialize Variables
     int numLoop = 0;
     int spriteAnimateSlow = 1;
+    int selectedChar = 0;
 
     srand(time(0));
 
@@ -95,8 +115,14 @@ int main()
             {
                 window.close();
             }
+
+            selectedChar = charSelect(event, selectedChar);
+
+
         }
 
+
+        cout << selectedChar << endl;
         //Animations
 
         //Full Speed
