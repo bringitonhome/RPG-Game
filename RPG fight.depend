@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1413688169 source:c:\users\joel\desktop\c++\rpg\rpg fight\main.cpp
+	<iostream>
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<cstdlib>
+	<ctime>
+	<sstream>
+	<string>
+	<typeinfo>
+
+1413691769 source:d:\keep\c++ programs\rpg\rpg fight\main.cpp
+	<iostream>
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<cstdlib>
+	<ctime>
+	<sstream>
+	<string>
+	<typeinfo>
+
