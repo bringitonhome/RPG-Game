@@ -4,7 +4,7 @@ CFLAGS=-Wall -c $(DEBUG)
 LFLAGS=-Wall $(DEBUG)
 
 BIN=bin
-SFML_DEPS=-lsfml-graphics -lsfml-window -lsfml-system
+SFML_DEPS=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all: main.o rpg
 
