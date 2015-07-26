@@ -29,6 +29,15 @@
 
 # Editor temporary files
 *.swp # vim
+*.swo # vim
+
+# Code::Blocks files
+*.cbp
+*.depend
+*.layout
+
+# All contents of the binaries folder
+bin/**
 
 # =========================
 # Operating System Files
