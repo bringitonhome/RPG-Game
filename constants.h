@@ -16,6 +16,7 @@
 #define EVADE 2
 #define LUCK 3
 #define SPEED 4
+#define MAXTIME 10000
 
 //Game constants
 #define NUMCHARACTERS 3

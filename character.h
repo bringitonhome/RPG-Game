@@ -14,8 +14,7 @@
 //#include "test.h" (just an example)
 
 //***********************************************
-class Character
-{
+class Character{
 public:
     Character();
     int getAttribute(int);
@@ -24,9 +23,20 @@ public:
     void setPosition(int, int);
     void moveSprite(int);
     void animateSprite(int, int, int);
+    void setSelected(bool);
+    void increaseATB();
+    int getATB();
+    bool isSelected();
+    sf::RectangleShape getTimeBar();
+    sf::RectangleShape getTimeBarOutline();
+
 private:
     int attributes[NUMATTRIBUTES];
     sf::Sprite sprite;
+    bool selected;
+    bool ready;
+    bool alive;
+    int atb;
 };
 
 

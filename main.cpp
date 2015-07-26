@@ -7,48 +7,34 @@
 #include <ctime>
 
 #include "constants.h"
-
 #include "character.h"
 
 using namespace std;
 
-int charSelect(sf::Event event, int selectedChar){
-    bool upPressed = false;
-    bool downPressed = false;
-
-    if(event.type == sf::Event::KeyReleased){
-        if(event.key.code == sf::Keyboard::Up){
-            upPressed = true;
-        }
-        if(event.key.code == sf::Keyboard::Down){
-            downPressed = true;
-        }
-    }
-    selectedChar += (int)downPressed - (int)upPressed;
-
-    return selectedChar;
-}
+int charSelect(sf::Event, int);
 
 int main()
 {
-    /*
+/*
     //Start Song
     sf::Music music;
     if(!music.openFromFile("song.wav"))
         return -1;
     music.play();
-    */
+*/
 
     //Initialize Variables
     int numLoop = 0;
-    int spriteAnimateSlow = 1;
+    int fastAlternate = 1;
+    int halfAlternate = 1;
+    int quarterAlternate = 1;
     int selectedChar = 0;
 
     srand(time(0));
 
     //Setting up the window
     sf::RenderWindow window(sf::VideoMode(WW, WH), "RPG Game");
-    window.setPosition(sf::Vector2i(0, 0));
+    window.setPosition(sf::Vector2i(200, 0));
     window.setFramerateLimit(60);
 
     //Setting up the background image
@@ -87,6 +73,21 @@ int main()
         enemies[x].setPosition(100, 75 + x*175);
     }
 
+    //Inserting Arrow Image
+    sf::Image arrowImage;
+    if(!arrowImage.loadFromFile("Arrow 9x6.png")){
+    }
+    arrowImage.createMaskFromColor(sf::Color::White);
+
+    sf::Texture arrowTexture;
+    if(!arrowTexture.loadFromImage(arrowImage)){
+    }
+
+    sf::Sprite arrow;
+    arrow.setTexture(arrowTexture);
+    arrow.setScale(SCALE, SCALE);
+
+
     //Display stats
     for(int x = 0; x < NUMCHARACTERS; x++){
         cout << "Character " << x << ":" << endl << endl;
@@ -109,20 +110,20 @@ int main()
     while(window.isOpen())
     {
         sf::Event event;
-        while(window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed)
-            {
+        while(window.pollEvent(event)){
+            if(event.type == sf::Event::Closed){
                 window.close();
             }
 
-            selectedChar = charSelect(event, selectedChar);
-
-
+            if(event.type == sf::Event::KeyReleased){
+                characters[selectedChar].setSelected(false);
+                selectedChar = charSelect(event, selectedChar);
+                characters[selectedChar].setSelected(true);
+                arrow.setPosition(characters[selectedChar].getSprite().getPosition().x + SCALE/2,
+                                  characters[selectedChar].getSprite().getPosition().y - 50);
+            }
         }
 
-
-        cout << selectedChar << endl;
         //Animations
 
         //Full Speed
@@ -133,22 +134,32 @@ int main()
             for(int x = 0; x < NUMENEMIES; x++){
                 enemies[x].animateSprite(numLoop/(DELAY), x + 3, 6);
             }
+
+            for(int x = 0; x < NUMCHARACTERS; x++){
+                characters[x].increaseATB();
+            }
+
+            fastAlternate *= -1;
         }
         //Half Speed
         if(numLoop % (DELAY*2) == 0){
-            for(int x = 0; x < NUMCHARACTERS; x++){
-                characters[x].moveSprite(spriteAnimateSlow);
-                spriteAnimateSlow *= -1;
-            }
-            for(int x = 0; x < NUMENEMIES; x++){
-                enemies[x].moveSprite(spriteAnimateSlow);
-                spriteAnimateSlow *= -1;
-            }
+            arrow.move(0, halfAlternate*2*SCALE);
 
-            spriteAnimateSlow *= -1;
+            halfAlternate *= -1;
+
         }
         //Quarter Speed
         if(numLoop % (DELAY*4) == 0){
+            for(int x = 0; x < NUMCHARACTERS; x++){
+                characters[x].moveSprite(quarterAlternate);
+                quarterAlternate *= -1;
+            }
+            for(int x = 0; x < NUMENEMIES; x++){
+                enemies[x].moveSprite(quarterAlternate);
+                quarterAlternate *= -1;
+            }
+            //arrow.move(10*quarterAlternate, 0);
+            quarterAlternate *= -1;
 
         }
 
@@ -157,24 +168,38 @@ int main()
 
         }
 
-
         numLoop += 1;
-
-
 
         //Display Everything
 
         window.clear(sf::Color::Black);
         window.draw(bgSprite);
+        window.draw(arrow);
 
         for(int x = 0; x < NUMCHARACTERS; x++){
             window.draw(characters[x].getSprite());
+            window.draw(characters[x].getTimeBar());
+            window.draw(characters[x].getTimeBarOutline());
         }
         for(int x = 0; x < NUMENEMIES; x++){
             window.draw(enemies[x].getSprite());
         }
-
         window.display();
-
     }
+}
+
+int charSelect(sf::Event event, int selectedChar){
+    bool upPressed = false;
+    bool downPressed = false;
+
+    if(event.key.code == sf::Keyboard::Up){
+        upPressed = true;
+    }
+    if(event.key.code == sf::Keyboard::Down){
+        downPressed = true;
+    }
+
+    selectedChar = (selectedChar + (int)downPressed - (int)upPressed + NUMCHARACTERS)%NUMCHARACTERS;
+
+    return selectedChar;
 }

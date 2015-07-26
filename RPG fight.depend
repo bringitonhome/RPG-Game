@@ -21,11 +21,24 @@
 	<string>
 	<typeinfo>
 
-1437936468 source:d:\keep\c++ programs\rpg-game\main.cpp
+1437957001 source:d:\keep\c++ programs\rpg-game\main.cpp
 	<iostream>
 	<SFML/Window.hpp>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
 	<SFML/Audio.hpp>
 	<ctime>
+	"constants.h"
+	"character.h"
+
+1437954173 d:\keep\c++ programs\rpg-game\constants.h
+
+1437957001 d:\keep\c++ programs\rpg-game\character.h
+
+1437957114 source:d:\keep\c++ programs\rpg-game\character.cpp
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	"constants.h"
+	"character.h"
 
