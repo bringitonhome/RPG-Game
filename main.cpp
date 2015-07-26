@@ -10,7 +10,7 @@
 #define SCALE 5
 
 //Animation Constants
-#define DELAY 800
+#define DELAY 5
 
 //Stats Constants
 #define NUMATTRIBUTES 5
@@ -74,10 +74,10 @@ int main()
 
     srand(time(0));
 
-
     //Setting up the window
     sf::RenderWindow window(sf::VideoMode(WW, WH), "RPG Game");
     window.setPosition(sf::Vector2i(0, 0));
+    window.setFramerateLimit(60);
 
     //Setting up the background image
     sf::Image bgImage;
