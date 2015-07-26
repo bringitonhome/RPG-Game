@@ -27,9 +27,13 @@
 *.out
 *.app
 
-# Editor temporary files
-*.swp # vim
-*.swo # vim
+# Vim files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
 
 # Code::Blocks files
 *.cbp
