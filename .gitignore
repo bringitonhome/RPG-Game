@@ -27,6 +27,9 @@
 *.out
 *.app
 
+# Editor temporary files
+*.swp # vim
+
 # =========================
 # Operating System Files
 # =========================
