@@ -27,6 +27,7 @@ public:
     void increaseATB();
     int getATB();
     bool isSelected();
+    bool isReady();
     sf::RectangleShape getTimeBar();
     sf::RectangleShape getTimeBarOutline();
 

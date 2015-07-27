@@ -53,7 +53,6 @@ bool Character::isSelected(){
     return selected;
 }
 void Character::increaseATB(){
-//D:\Keep\C++ Programs\RPG-Game\character.cpp
     if(atb < MAXTIME && alive == true){
         atb += attributes[SPEED];
     }
@@ -62,6 +61,10 @@ void Character::increaseATB(){
         ready = true;
     }
 }
+bool Character::isReady(){
+    return ready;
+}
+
 sf::RectangleShape Character::getTimeBar(){
     sf::RectangleShape rect(sf::Vector2f(atb/100, 10));
     rect.setFillColor(sf::Color::Cyan);

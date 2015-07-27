@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int charSelect(sf::Event, int);
+int charSelect(sf::Event, int, Character*);
 
 int main()
 {
@@ -25,6 +25,7 @@ int main()
 
     //Initialize Variables
     int numLoop = 0;
+    int arrowAlternate = 1;
     int fastAlternate = 1;
     int halfAlternate = 1;
     int quarterAlternate = 1;
@@ -109,20 +110,32 @@ int main()
 
     while(window.isOpen())
     {
+
+
         sf::Event event;
         while(window.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 window.close();
             }
 
-            if(event.type == sf::Event::KeyReleased){
-                characters[selectedChar].setSelected(false);
-                selectedChar = charSelect(event, selectedChar);
-                characters[selectedChar].setSelected(true);
-                arrow.setPosition(characters[selectedChar].getSprite().getPosition().x + SCALE/2,
-                                  characters[selectedChar].getSprite().getPosition().y - 50);
-            }
+
+
+                if(event.type == sf::Event::KeyReleased){
+                    characters[selectedChar].setSelected(false);
+                    selectedChar = charSelect(event, selectedChar, characters);
+                    characters[selectedChar].setSelected(true);
+
+                    arrow.setPosition(characters[selectedChar].getSprite().getPosition().x,
+                                      characters[selectedChar].getSprite().getPosition().y - 50);
+                    arrowAlternate = 1;
+                }
+
+
         }
+
+        arrow.setPosition(characters[selectedChar].getSprite().getPosition().x, arrow.getPosition().y);
+
+
 
         //Animations
 
@@ -141,13 +154,19 @@ int main()
 
             fastAlternate *= -1;
         }
+
+
         //Half Speed
         if(numLoop % (DELAY*2) == 0){
-            arrow.move(0, halfAlternate*2*SCALE);
+
+            arrow.move(0, arrowAlternate*2*SCALE);
+            arrowAlternate *= -1;
+
 
             halfAlternate *= -1;
-
         }
+
+
         //Quarter Speed
         if(numLoop % (DELAY*4) == 0){
             for(int x = 0; x < NUMCHARACTERS; x++){
@@ -158,9 +177,8 @@ int main()
                 enemies[x].moveSprite(quarterAlternate);
                 quarterAlternate *= -1;
             }
-            //arrow.move(10*quarterAlternate, 0);
-            quarterAlternate *= -1;
 
+            quarterAlternate *= -1;
         }
 
         //Eighth Speed
@@ -174,6 +192,7 @@ int main()
 
         window.clear(sf::Color::Black);
         window.draw(bgSprite);
+
         window.draw(arrow);
 
         for(int x = 0; x < NUMCHARACTERS; x++){
@@ -188,18 +207,31 @@ int main()
     }
 }
 
-int charSelect(sf::Event event, int selectedChar){
-    bool upPressed = false;
-    bool downPressed = false;
+int charSelect(sf::Event event, int selectedChar, Character *characters){
+
+    //bool upPressed = false;
+    //bool downPressed = false;
+    int x = 0;
 
     if(event.key.code == sf::Keyboard::Up){
-        upPressed = true;
-    }
-    if(event.key.code == sf::Keyboard::Down){
-        downPressed = true;
+        //upPressed = true;
+        selectedChar = (selectedChar - 1 + NUMCHARACTERS)%NUMCHARACTERS;
+        while(characters[selectedChar].isReady() == false && x < NUMCHARACTERS){
+            selectedChar = (selectedChar - 1 + NUMCHARACTERS)%NUMCHARACTERS;
+            x++;
+        }
     }
 
-    selectedChar = (selectedChar + (int)downPressed - (int)upPressed + NUMCHARACTERS)%NUMCHARACTERS;
+    if(event.key.code == sf::Keyboard::Down){
+        //downPressed = true;
+        selectedChar = (selectedChar + 1 + NUMCHARACTERS)%NUMCHARACTERS;
+        while(characters[selectedChar].isReady() == false && x < NUMCHARACTERS){
+            selectedChar = (selectedChar + 1 + NUMCHARACTERS)%NUMCHARACTERS;
+            x++;
+        }
+    }
+
+    //selectedChar = (selectedChar + (int)downPressed - (int)upPressed + NUMCHARACTERS)%NUMCHARACTERS;
 
     return selectedChar;
 }
