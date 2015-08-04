@@ -22,4 +22,8 @@
 #define NUMCHARACTERS 3
 #define NUMENEMIES 3
 
+//Battle constants
+#define CRITMULT 2
+#define EVADEMULT 4
+
 #endif //CONSTANTS_H

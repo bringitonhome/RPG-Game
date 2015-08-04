@@ -25,14 +25,19 @@ public:
     void animateSprite(int, int, int);
     void setSelected(bool);
     void increaseATB();
+    void setDamage(int);
+    void resetATB();
     int getATB();
     bool isSelected();
     bool isReady();
+    bool isAlive();
     sf::RectangleShape getTimeBar();
     sf::RectangleShape getTimeBarOutline();
+    sf::RectangleShape getHealthBar();
 
 private:
     int attributes[NUMATTRIBUTES];
+    int health;
     sf::Sprite sprite;
     bool selected;
     bool ready;

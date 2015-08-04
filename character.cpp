@@ -19,6 +19,7 @@ Character::Character(){
     attributes[LUCK] = 50 + (rand() % 50);
     attributes[SPEED] = 50 + (rand() % 50);
     selected = false;
+    health = 1000;
     ready = false;
     alive = true;
     atb = 0;
@@ -28,6 +29,18 @@ int Character::getAttribute(int attribute){
 	return attributes[attribute];
 }
 
+void Character::setDamage(int damage){
+    health -= damage;
+    if(health <= 0){
+        health = 0;
+        alive = false;
+        ready = false;
+    }
+}
+void Character::resetATB(){
+    atb = 0;
+    ready = false;
+}
 sf::Sprite Character::getSprite(){
 	return sprite;
 }
@@ -56,13 +69,16 @@ void Character::increaseATB(){
     if(atb < MAXTIME && alive == true){
         atb += attributes[SPEED];
     }
-    if(atb > MAXTIME && alive == true){
+    if(atb >= MAXTIME && alive == true){
         atb = MAXTIME;
         ready = true;
     }
 }
 bool Character::isReady(){
     return ready;
+}
+bool Character::isAlive(){
+    return alive;
 }
 
 sf::RectangleShape Character::getTimeBar(){
@@ -76,10 +92,25 @@ sf::RectangleShape Character::getTimeBarOutline(){
     sf::RectangleShape rect(sf::Vector2f(100, 10));
     rect.setFillColor(sf::Color::Transparent);
     rect.setPosition(sprite.getPosition().x - 25,
-                               sprite.getPosition().y + 110);
+                     sprite.getPosition().y + 110);
     rect.setOutlineThickness(3);
     rect.setOutlineColor(sf::Color::Black);
 
+    return rect;
+}
+sf::RectangleShape Character::getHealthBar(){
+    sf::RectangleShape rect(sf::Vector2f(health/10, 10));
+    if(health >= 666){
+        rect.setFillColor(sf::Color::Blue);
+    }
+    if(health < 666 && health >= 333){
+        rect.setFillColor(sf::Color::Green);
+    }
+    if(health < 333){
+        rect.setFillColor(sf::Color::Red);
+    }
+    rect.setPosition(sprite.getPosition().x - 25,
+                     sprite.getPosition().y - 10);
     return rect;
 }
 int Character::getATB(){
